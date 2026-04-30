@@ -12,7 +12,7 @@
     "@hugeicons/react": "^1.1.6",
     "@strange-huge/icons": "github:strange-rock/strange-huge-icons",
     "framer-motion": "^12.38.0",
-    "next": "15.3.3",
+    "next": "16.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
