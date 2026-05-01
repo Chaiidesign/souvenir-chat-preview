@@ -2151,9 +2151,8 @@ function ResearchBlock({
           }}
           style={{ overflow: 'hidden' }}>
           <div style={{
-            border: '1px solid rgba(59,54,50,0.1)', borderRadius: 10,
-            background: 'rgba(255,255,255,0.55)', padding: '12px 14px',
             display: 'flex', flexDirection: 'column', gap: 10,
+            paddingTop: 8, paddingBottom: 4,
           }}>
 
             {/* ── Reasoning section (gated) ── */}
@@ -2215,7 +2214,7 @@ function ResearchBlock({
 
             {/* Divider */}
             {hasReasoning && hasActivities && activitiesRevealed > 0 && (
-              <div style={{ height: 1, background: 'rgba(59,54,50,0.07)', margin: '0 -2px' }} />
+              <div style={{ height: 1, background: 'rgba(59,54,50,0.08)' }} />
             )}
 
             {/* ── Completed groups (collapsed) ── */}
