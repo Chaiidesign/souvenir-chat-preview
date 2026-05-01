@@ -1939,50 +1939,81 @@ function ModelRow({
 //  ReasoningStep — individual stacked row, expandable
 // ─────────────────────────────────────────────────────────────────────────────
 function ReasoningStepRow({
-  step, isExpanded, onToggle,
-}: { step: ReasoningStep; isExpanded: boolean; onToggle: () => void }) {
+  step, isExpanded, onToggle, isActive, isLast,
+}: { step: ReasoningStep; isExpanded: boolean; onToggle: () => void; isActive: boolean; isLast: boolean }) {
+  const verbStyle: React.CSSProperties = isActive ? {
+    fontWeight: 600,
+    backgroundImage: 'linear-gradient(90deg, #B6ACA4 0%, #3B3632 45%, #3B3632 55%, #B6ACA4 100%)',
+    backgroundSize: '200% 100%',
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    animation: 'svLabelShimmer 2.4s ease-in-out infinite',
+  } : { fontWeight: 600, color: '#26211E' }
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-      <button onClick={onToggle} style={{
-        display: 'flex', alignItems: 'center', gap: 6,
-        background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 0', textAlign: 'left',
-      }}>
-        <span style={{ display: 'flex', alignItems: 'center', lineHeight: 0, flexShrink: 0 }}>
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', paddingBottom: isLast ? 0 : 6 }}>
+
+      {/* Left column — icon + vertical connector */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 20, flexShrink: 0 }}>
+        <span style={{ width: 20, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 0, flexShrink: 0 }}>
           {(() => {
             const ri = REASONING_ICON[step.verb] ?? { icon: NeuralNetworkIcon, isHuge: false }
             return ri.isHuge
-              ? <HIcon icon={ri.icon} size={16} color="#C0B5AD" strokeWidth={1.5} />
-              : <ri.icon size={16} color="#C0B5AD" />
+              ? <HIcon icon={ri.icon} size={16} color={isActive ? '#A89488' : '#C0B5AD'} strokeWidth={1.5} />
+              : <ri.icon size={16} color={isActive ? '#A89488' : '#C0B5AD'} />
           })()}
         </span>
-        <span style={{ fontSize: 14, color: '#524B47', flex: 1 }}>
-          <strong style={{ fontWeight: 600, color: '#26211E' }}>{step.verb}</strong>
-          {' '}{step.detail}
-        </span>
-        <motion.span
-          animate={{ rotate: isExpanded ? 90 : 0 }}
-          transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-          style={{ display: 'flex', alignItems: 'center', lineHeight: 0, flexShrink: 0 }}>
-          <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-            <path d="M3.5 2 L7 5 L3.5 8" stroke="#C0B5AD" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </motion.span>
-      </button>
-      <AnimatePresence initial={false}>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            style={{ overflow: 'hidden' }}>
-            <p style={{
-              fontSize: 14, color: '#524B47', lineHeight: '22px',
-              borderLeft: '2px solid #EDE1D7', paddingLeft: 10, margin: '4px 0 2px 17px',
-            }}>
-              {renderInlineMd(step.summary)}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {!isLast && (
+            <motion.div
+              initial={{ scaleY: 0, opacity: 0 }}
+              animate={{ scaleY: 1, opacity: 1 }}
+              transition={{ duration: 0.28, ease: 'easeOut', delay: 0.1 }}
+              style={{ width: 1, flex: 1, background: '#EDE1D7', transformOrigin: 'top', minHeight: 6 }}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Right column — button row + expanded summary */}
+      <div style={{ flex: 1, paddingLeft: 6, display: 'flex', flexDirection: 'column' }}>
+        <button onClick={onToggle} style={{
+          display: 'flex', alignItems: 'center', gap: 6, width: '100%',
+          background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 0', textAlign: 'left',
+        }}>
+          <span style={{ fontSize: 14, color: '#524B47', flex: 1 }}>
+            <strong style={verbStyle}>{step.verb}{isActive ? '…' : ''}</strong>
+            {!isActive && <>{' '}{step.detail}</>}
+          </span>
+          {!isActive && (
+            <motion.span
+              animate={{ rotate: isExpanded ? 90 : 0 }}
+              transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+              style={{ display: 'flex', alignItems: 'center', lineHeight: 0, flexShrink: 0 }}>
+              <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+                <path d="M3.5 2 L7 5 L3.5 8" stroke="#C0B5AD" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </motion.span>
+          )}
+        </button>
+        <AnimatePresence initial={false}>
+          {isExpanded && !isActive && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              style={{ overflow: 'hidden' }}>
+              <p style={{
+                fontSize: 14, color: '#524B47', lineHeight: '22px',
+                borderLeft: '2px solid #EDE1D7', paddingLeft: 10, margin: '4px 0 2px 0',
+              }}>
+                {renderInlineMd(step.summary)}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
     </div>
   )
 }
@@ -2127,10 +2158,25 @@ function ResearchBlock({
 
             {/* ── Reasoning section (gated) ── */}
             {hasReasoning && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                 {scenario.reasoningSteps.slice(0, reasoningCount).map((step, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
-                    <ReasoningStepRow step={step} isExpanded={expandedReasoningIdxs.has(i)} onToggle={() => onToggleReasoning(i)} />
+                  <motion.div
+                    key={i}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    transition={{
+                      height: { type: 'spring', stiffness: 300, damping: 28 },
+                      opacity: { duration: 0.24, delay: 0.08, ease: 'easeOut' },
+                    }}
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <ReasoningStepRow
+                      step={step}
+                      isExpanded={expandedReasoningIdxs.has(i)}
+                      onToggle={() => onToggleReasoning(i)}
+                      isActive={i === reasoningCount - 1 && reasoningCount < scenario.reasoningSteps.length}
+                      isLast={i === reasoningCount - 1}
+                    />
                   </motion.div>
                 ))}
 
