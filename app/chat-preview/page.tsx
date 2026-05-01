@@ -1967,7 +1967,7 @@ function ReasoningStepRow({
       {/* Right column — button row + expanded summary */}
       <div style={{ flex: 1, paddingLeft: 6, display: 'flex', flexDirection: 'column' }}>
         <button onClick={onToggle} style={{
-          display: 'flex', alignItems: 'center', gap: 6, width: '100%',
+          display: 'flex', alignItems: 'center', gap: 8, width: '100%',
           background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 0', textAlign: 'left',
         }}>
           <span style={{ fontSize: 14, color: '#524B47', flex: 1 }}>
@@ -1979,8 +1979,8 @@ function ReasoningStepRow({
               animate={{ rotate: isExpanded ? 90 : 0 }}
               transition={{ type: 'spring', stiffness: 380, damping: 28 }}
               style={{ display: 'flex', alignItems: 'center', lineHeight: 0, flexShrink: 0 }}>
-              <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-                <path d="M3.5 2 L7 5 L3.5 8" stroke="#C0B5AD" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none">
+                <path d="M3.5 2 L7 5 L3.5 8" stroke="#C0B5AD" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </motion.span>
           )}
@@ -2171,14 +2171,14 @@ function ResearchBlock({
                 {reasoningCount >= scenario.reasoningSteps.length && scenario.thinkingSummary && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                     <button onClick={onToggleThinking} style={{
-                      display: 'flex', alignItems: 'center', gap: 4, background: 'transparent',
+                      display: 'flex', alignItems: 'center', gap: 6, background: 'transparent',
                       border: 'none', cursor: 'pointer', padding: '1px 0',
                     }}>
                       <span style={{ fontSize: 14, color: '#9A9089', fontWeight: 500 }}>Thinking</span>
                       <motion.span animate={{ rotate: thinkingExpanded ? 90 : 0 }} transition={{ type: 'spring', stiffness: 380, damping: 28 }}
                         style={{ display: 'flex', lineHeight: 0 }}>
-                        <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-                          <path d="M3.5 2 L7 5 L3.5 8" stroke="#C0B5AD" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                        <svg width="12" height="12" viewBox="0 0 10 10" fill="none">
+                          <path d="M3.5 2 L7 5 L3.5 8" stroke="#C0B5AD" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </motion.span>
                     </button>
