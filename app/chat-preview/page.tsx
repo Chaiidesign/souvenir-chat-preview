@@ -1940,11 +1940,11 @@ function ReasoningStepRow({
   } : { fontWeight: 600, color: '#26211E' }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', paddingBottom: isLast ? 0 : 6 }}>
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', paddingBottom: isLast ? 0 : 12 }}>
 
       {/* Left column — icon + vertical connector */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 20, flexShrink: 0 }}>
-        <span style={{ width: 20, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 0, flexShrink: 0 }}>
+        <span style={{ width: 20, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 0, flexShrink: 0 }}>
           {(() => {
             const ri = REASONING_ICON[step.verb] ?? { icon: AiNetworkIcon, isHuge: true }
             return ri.isHuge
@@ -1958,17 +1958,17 @@ function ReasoningStepRow({
               initial={{ scaleY: 0, opacity: 0 }}
               animate={{ scaleY: 1, opacity: 1 }}
               transition={{ duration: 0.28, ease: 'easeOut', delay: 0.1 }}
-              style={{ width: 1, flex: 1, background: '#EDE1D7', transformOrigin: 'top', minHeight: 6 }}
+              style={{ width: 1, flex: 1, background: '#EDE1D7', transformOrigin: 'top', minHeight: 12 }}
             />
           )}
         </AnimatePresence>
       </div>
 
       {/* Right column — button row + expanded summary */}
-      <div style={{ flex: 1, paddingLeft: 6, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, paddingLeft: 10, display: 'flex', flexDirection: 'column' }}>
         <button onClick={onToggle} style={{
           display: 'flex', alignItems: 'center', gap: 8, width: '100%',
-          background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 0', textAlign: 'left',
+          background: 'transparent', border: 'none', cursor: 'pointer', padding: '5px 0', textAlign: 'left',
         }}>
           <span style={{ fontSize: 14, color: '#524B47', flex: 1 }}>
             <strong style={verbStyle}>{step.verb}{isActive ? '…' : ''}</strong>
@@ -1993,7 +1993,7 @@ function ReasoningStepRow({
               style={{ overflow: 'hidden' }}>
               <p style={{
                 fontSize: 14, color: '#524B47', lineHeight: '22px',
-                borderLeft: '2px solid #EDE1D7', paddingLeft: 10, margin: '4px 0 2px 0',
+                borderLeft: '2px solid #EDE1D7', paddingLeft: 10, margin: '8px 0 6px 0',
               }}>
                 {renderInlineMd(step.summary)}
               </p>
@@ -2016,7 +2016,7 @@ function ActivityRow({
   const verb = ACTIVITY_VERB[activity.type]
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         {/* Status icon */}
         {isActive ? (
@@ -2068,7 +2068,7 @@ function ActivityRow({
 
       {/* Results */}
       {revealedResults > 0 && activity.results && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 3, paddingLeft: 46 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, paddingLeft: 48 }}>
           {activity.results.slice(0, revealedResults).map((r, ri) => {
             const isReading = readingResultIdxs?.has(ri) ?? false
             return (
@@ -2139,8 +2139,8 @@ function ResearchBlock({
           }}
           style={{ overflow: 'hidden' }}>
           <div style={{
-            display: 'flex', flexDirection: 'column', gap: 10,
-            paddingTop: 8, paddingBottom: 4,
+            display: 'flex', flexDirection: 'column', gap: 16,
+            paddingTop: 12, paddingBottom: 10,
           }}>
 
             {/* ── Reasoning section (gated) ── */}
@@ -2172,7 +2172,7 @@ function ResearchBlock({
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                     <button onClick={onToggleThinking} style={{
                       display: 'flex', alignItems: 'center', gap: 6, background: 'transparent',
-                      border: 'none', cursor: 'pointer', padding: '1px 0',
+                      border: 'none', cursor: 'pointer', padding: '4px 0',
                     }}>
                       <span style={{ fontSize: 14, color: '#9A9089', fontWeight: 500 }}>Thinking</span>
                       <motion.span animate={{ rotate: thinkingExpanded ? 90 : 0 }} transition={{ type: 'spring', stiffness: 380, damping: 28 }}
@@ -2210,7 +2210,7 @@ function ResearchBlock({
               const groupActivities = scenario.activities.slice(groupBoundaries[gi], groupBoundaries[gi] + group.activityCount)
               const isExpanded = expandedGroupIdx === gi
               return (
-                <div key={gi} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <div key={gi} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <button onClick={() => onToggleGroup(gi)} style={{
                     display: 'flex', alignItems: 'center', gap: 6,
                     background: 'transparent', border: 'none', cursor: 'pointer', padding: '1px 0', textAlign: 'left',
@@ -2232,7 +2232,7 @@ function ResearchBlock({
                         initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                         style={{ overflow: 'hidden' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 5, paddingLeft: 8, paddingTop: 3 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingLeft: 8, paddingTop: 8 }}>
                           {groupActivities.map((act, ai) => (
                             <div key={ai} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                               <span style={{ display: 'flex', lineHeight: 0 }}><HIcon icon={Checkmark} size={12} color="#80B707" strokeWidth={2.5} /></span>
