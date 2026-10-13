@@ -18,6 +18,7 @@ import {
   InformationCircleIcon, Alert01Icon, Cancel01Icon, CheckmarkCircle01Icon,
 } from '@hugeicons/core-free-icons'
 import { LlmIcon } from '@strange-huge/icons/llm'
+import DocumentArtifact from './document-artifact'
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Assets
@@ -177,6 +178,7 @@ type ResponseBlock =
   | { kind: 'card';             data: CardData }
   | { kind: 'connector-error';  data: ConnectorErrorData }
   | { kind: 'search-timeout';   data: SearchTimeoutData }
+  | { kind: 'document';         data: { title: string; pdfUrl: string } }
 
 interface ScenarioData {
   id: string
@@ -1024,6 +1026,20 @@ async function safeSave(data: Parameters<typeof client.pins.create>[0]) {
         content: 'Your pin save rate has been **accelerating**. The 30-day average is 8.6 pins/day, but the last 7 days average 15.7 — nearly 2× the baseline.\n\nThe spike on Apr 14 corresponds to the sprint start. **Sprints are your best research moments** — you save more when you have a clear goal to collect toward.',
       },
     ] as ResponseBlock[],
+  },
+
+  // ── E1: Connector auth failure — Gmail expired ─────────────────────────────
+  {
+    id: 'S18', name: 'Output: Invoice PDF', description: 'Synthetic document review — exact PDF preview and download',
+    userQuery: 'Create a draft invoice from these sample facts. Seller: Example Commerce LLC. Customer: North Market Studio. Invoice TEST-INV-1042, issued October 12, 2026. Ceramic mug MUG-01: 12 × USD 18.00. Cotton tote TOTE-02: 8 × USD 24.00. Show the items subtotal. Do not invent tax, shipping, discounts, payment terms, or payment status. Do not send it.',
+    skipRouting: true,
+    hasActivities: false,
+    reasoningSteps: [], thinkingSummary: '', activities: [], actionGroups: [],
+    response: '', researchTitle: null,
+    responseBlocks: [
+      { kind: 'text', content: 'I prepared a **synthetic draft invoice** for review. The two item amounts are USD 216.00 and USD 192.00; the **items subtotal is USD 408.00**, not an amount due. Tax, shipping, discounts, payment terms, and payment status need confirmation. Nothing has been sent.' },
+      { kind: 'document', data: { title: 'Invoice TEST-INV-1042', pdfUrl: '/samples/TEST-INV-1042-draft.pdf' } },
+    ],
   },
 
   // ── E1: Connector auth failure — Gmail expired ─────────────────────────────
@@ -4306,6 +4322,7 @@ function BlockSequenceRenderer({
         if (block.kind === 'pie-chart')  return wrap(d => <AnimatedPieChart  data={block.data} onComplete={d} />)
         if (block.kind === 'line-chart') return wrap(d => <AnimatedLineChart data={block.data} onComplete={d} />)
         if (block.kind === 'card')       return wrap(d => <AnimatedCard      data={block.data} onComplete={d} />)
+        if (block.kind === 'document')   return wrap(d => <DocumentArtifact title={block.data.title} pdfUrl={block.data.pdfUrl} onComplete={d} />)
         if (block.kind === 'connector-error') return wrap(d => <AnimatedConnectorError data={block.data} onComplete={d} onRetry={onRetry} />)
         if (block.kind === 'search-timeout')  return wrap(d => <AnimatedSearchTimeout  data={block.data} onComplete={d} onRetry={onRetry} />)
         return null
