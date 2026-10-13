@@ -1,6 +1,6 @@
 # Standalone chat prototype → Souvenir output preview
 
-Updated October 13, 2026. This repository remains a standalone design and animation reference. The canonical product and combined internal preview live in [Flowting-ai/front-end](https://github.com/Flowting-ai/front-end), branch [`feat/output-experience`](https://github.com/Flowting-ai/front-end/tree/feat/output-experience). Read its [`research/output-ecosystem/CLAUDE_CODE_HANDOFF.md`](https://github.com/Flowting-ai/front-end/blob/feat/output-experience/research/output-ecosystem/CLAUDE_CODE_HANDOFF.md) before integrating.
+Updated October 13, 2026. This repository remains a standalone design and animation reference. The canonical product and combined internal preview belong in [Flowting-ai/front-end](https://github.com/Flowting-ai/front-end), branch [`feat/output-experience`](https://github.com/Flowting-ai/front-end/tree/feat/output-experience). Read its [published Claude Code handoff](https://github.com/Flowting-ai/front-end/blob/docs/claude-output-handoff/research/output-ecosystem/CLAUDE_CODE_HANDOFF.md) before integrating. The full preview implementation is still local pending approval for public publication.
 
 ## What is here
 
