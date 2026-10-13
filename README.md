@@ -4,11 +4,13 @@
 
 Animation prototype for the Souvenir V2 individual chat experience. Shows how the message flow looks and feels before engineering builds it.
 
+For the current integration into the full Souvenir frontend, read [INTEGRATION_HANDOFF.md](INTEGRATION_HANDOFF.md). This standalone prototype is a reference; the combined output experience belongs in `Flowting-ai/front-end` on `feat/output-experience`.
+
 ---
 
 ## What this shows
 
-Four demo modes at the top of the page:
+The original four core modes are below. The current source also includes synthetic scenarios S1–S17 and E1–E2, with files, connectors, structured output and mixed content. See the integration handoff for the source map and reuse boundaries.
 
 | Mode | What happens |
 |------|-------------|
